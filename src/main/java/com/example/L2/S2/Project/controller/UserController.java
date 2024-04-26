@@ -1,5 +1,6 @@
 package com.example.L2.S2.Project.controller;
 
+import com.example.L2.S2.Project.dao.request.SignInRequest;
 import com.example.L2.S2.Project.dao.request.SignUpRequest;
 import com.example.L2.S2.Project.dao.response.JwtAuthenticationResponse;
 import com.example.L2.S2.Project.repository.UserRepository;
@@ -25,5 +26,15 @@ public class UserController {
     @PostMapping("/signup")
     public ResponseEntity<JwtAuthenticationResponse> signUp(@RequestBody SignUpRequest request) {
         return ResponseEntity.ok(authenticationService.signUp(request));
+    }
+
+    @PostMapping("/signIn")
+    public ResponseEntity<JwtAuthenticationResponse> signIn(@RequestBody SignInRequest request){
+        return ResponseEntity.ok(authenticationService.signIn(request));
+    }
+
+    @PostMapping("/adminSignup")
+    public  ResponseEntity<JwtAuthenticationResponse> adminSignup(@RequestBody SignUpRequest request){
+        return ResponseEntity.ok(authenticationService.adminSignup(request));
     }
 }
