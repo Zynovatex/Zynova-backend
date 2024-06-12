@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -24,6 +25,32 @@ public class ProductService {
         return product.orElse(null);
     }
 
+    public Product updateProductById(Long id, Product product) {
+        Optional<Product> existProduct = productRepository.findById(id);
+        if (existProduct.isPresent()) {
+            Product orginalProduct = existProduct.get();
+            if (Objects.nonNull(product.getTitle()) && !"".equalsIgnoreCase(product.getTitle())) {
+                orginalProduct.setTitle(product.getTitle());
+            }
+            if (product.getPrice() != 0) {
+                orginalProduct.setPrice(product.getPrice());
+            }
+            if (product.getQuantity() != 0) {
+                orginalProduct.setQuantity(product.getQuantity());
+            }
+            if (!"".equalsIgnoreCase(product.getImageUrl())) {
+                orginalProduct.setImageUrl(product.getImageUrl());
+            }
+            if (!"".equalsIgnoreCase(product.getDescription())) {
+                orginalProduct.setDescription(product.getDescription());
+            }
+            if (!"".equalsIgnoreCase(product.getBrand())) {
+                orginalProduct.setBrand(product.getBrand());
+            }
+            return productRepository.save(orginalProduct);
+        }
+        return null;
+    }
     public String deleteProductById(Long id) {
         if (productRepository.findById(id).isPresent()) {
             productRepository.deleteById(id);

@@ -1,4 +1,4 @@
-package com.example.L2.S2.Project.dao.response;
+package com.example.L2.S2.Project.dao.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class JwtAuthenticationResponse {
-    private String token;
-    private String message;
+public class DriverRequest {
+    private String name;
+    private String email;
+    private int phone;
 }

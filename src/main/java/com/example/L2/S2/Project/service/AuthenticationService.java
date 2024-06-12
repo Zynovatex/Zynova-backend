@@ -13,16 +13,25 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 @Data
 public class AuthenticationService {
     private final UserRepository userRepository;
-    public  AuthenticationManager authenticationManager;
+    private final  AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
 
     public JwtAuthenticationResponse signUp(SignUpRequest request) {
+        Optional<User> existingUser = userRepository.findByEmail(request.getEmail());
+        if (existingUser.isPresent()) {
+            return JwtAuthenticationResponse.builder()
+                    .message("User with email " + request.getEmail() + " already exists.")
+                    .build();
+        }
+
         var user = User.builder().name(request.getName()).email(request.getEmail()).password(passwordEncoder.encode(request.getPassword())).role(Role.User).build();
         userRepository.save(user);
         var jwt = jwtService.generateToken(user);
@@ -30,11 +39,43 @@ public class AuthenticationService {
     }
 
     public JwtAuthenticationResponse signIn(SignInRequest request) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
+
+
+
         var user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid email or password"));
+
+//        authenticationManager.authenticate(
+//                new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
+
         var jwt = jwtService.generateToken(user);
+        System.out.println(jwt);
+        return JwtAuthenticationResponse.builder().token(jwt).build();
+    }
+
+    public JwtAuthenticationResponse adminSignup(SignUpRequest request) {
+
+        Optional<User> existingUser = userRepository.findByEmail(request.getEmail());
+        if (existingUser.isPresent()) {
+            return JwtAuthenticationResponse.builder()
+                    .message("User with email " + request.getEmail() + " already exists.")
+                    .build();
+        }
+
+        var admin = User.builder().name(request.getName()).email(request.getEmail()).password(passwordEncoder.encode(request.getPassword())).role(Role.Admin).build();
+        userRepository.save(admin);
+        var jwt = jwtService.generateToken(admin);
+        return JwtAuthenticationResponse.builder().token(jwt).build();
+    }
+
+    public JwtAuthenticationResponse adminSignin(SignInRequest request) {
+
+
+        var user = userRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new IllegalArgumentException("Invalid email or password"));
+
+        var jwt = jwtService.generateToken(user);
+        System.out.println(jwt);
         return JwtAuthenticationResponse.builder().token(jwt).build();
     }
 }
