@@ -41,8 +41,7 @@ public class SecurityConfig {
         httpSecurity.csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers(
-                                "/api/user/signup" ,"/api/user/signIn", "/api/user/adminSignup")
+                        .requestMatchers("/api/user/signup", "/api/user/signin","/api/user/adminSignup")
                         .permitAll()
                         .anyRequest()
                         .authenticated())
@@ -52,8 +51,6 @@ public class SecurityConfig {
                         jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class
                 );
         return httpSecurity.build();
-
-
     }
 
 

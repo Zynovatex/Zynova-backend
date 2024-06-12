@@ -23,13 +23,15 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
     private final AuthenticationService authenticationService;
 
+    //user signup
     @PostMapping("/signup")
     public ResponseEntity<JwtAuthenticationResponse> signUp(@RequestBody SignUpRequest request) {
         return ResponseEntity.ok(authenticationService.signUp(request));
     }
 
-    @PostMapping("/signIn")
+    @PostMapping("/signin")
     public ResponseEntity<JwtAuthenticationResponse> signIn(@RequestBody SignInRequest request){
+
         return ResponseEntity.ok(authenticationService.signIn(request));
     }
 
