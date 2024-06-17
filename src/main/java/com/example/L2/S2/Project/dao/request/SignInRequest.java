@@ -1,5 +1,6 @@
 package com.example.L2.S2.Project.dao.request;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

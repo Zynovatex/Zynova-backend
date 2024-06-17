@@ -43,11 +43,11 @@ public class SecurityConfig {
         httpSecurity.csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers(
-                                "/api/user/signup","/api/user/signin","/api/user/adminSignup","/api/user/adminSignin","api/v1/order/create","api/driver/addDriver","api/product/allProduct","api/product/get/{id}" )
-                        .permitAll()
+//                        .requestMatchers(
+//                                "/api/user/signup","/api/user/signin","/api/user/adminSignup","/api/user/adminSignin","api/v1/order/create","api/driver/addDriver","api/product/allProduct","api/product/get/{id}" )
+//                        .permitAll()
                         .anyRequest()
-                        .authenticated())
+                        .permitAll())
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(customAuthenticationEntryPoint()))
                 .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider()).addFilterBefore(
