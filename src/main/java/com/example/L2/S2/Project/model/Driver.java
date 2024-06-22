@@ -8,13 +8,10 @@ import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
 @Entity
 @Table(name = "driver")
 @Data
 @AllArgsConstructor
-
 
 public class Driver {
 
@@ -31,7 +28,6 @@ public class Driver {
     public Driver() {
 
     }
-
 
     public void addOrder(DeliverDetails detail) {
         details.add(detail);

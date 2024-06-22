@@ -30,7 +30,8 @@ public class AuthenticationService {
     public JwtAuthenticationResponse signUp(SignUpRequest request) {
         Optional<User> existingUser = userRepository.findByEmail(request.getEmail());
         if (existingUser.isPresent()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User with email " + request.getEmail() + " already exists.");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "User with email " + request.getEmail() + " already exists.");
         }
 
         String rawPassword = request.getPassword();
@@ -66,7 +67,8 @@ public class AuthenticationService {
     public JwtAuthenticationResponse adminSignup(SignUpRequest request) {
         Optional<User> existingUser = userRepository.findByEmail(request.getEmail());
         if (existingUser.isPresent()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User with email " + request.getEmail() + " already exists.");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "User with email " + request.getEmail() + " already exists.");
         }
 
         var admin = User.builder()

@@ -11,24 +11,25 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/order")
 public class OrderController {
     private final OrderService orderService;
 
+    
     @PostMapping("/create")
-//    @PreAuthorize("hasAnyAuthority('User')")
+    // @PreAuthorize("hasAnyAuthority('User')")
     public ResponseEntity<String> createOrder(@RequestBody OrderRequest orderRequest) {
         orderService.createOrder(orderRequest);
         return new ResponseEntity<>("Order created successfully", HttpStatus.OK);
     }
 
     @GetMapping("/all")
-   // @PreAuthorize("hasAnyAuthority('Admin','User')")
+    // @PreAuthorize("hasAnyAuthority('Admin','User')")
     public List<Order> allOrders() throws IllegalStateException {
         return orderService.allOrders();
     }
-
 
 }
